@@ -5,15 +5,16 @@ import Image from "next/image"
 import { useEffect, useState } from "react"
 import Swal from "sweetalert2"
 
-interface Produto {
-    id: number
-    descricao: string
-    categoria: string
-    preco: number
-    imagem: string
-}
 
 export default function CardapioAdmin() {
+    
+    interface Produto {
+        id: number
+        descricao: string
+        categoria: string
+        preco: number
+        imagem: string
+    }
 
     const [produtos, setProdutos] = useState<Produto[]>([])
     const [carregando, setCarregando] = useState(true)
@@ -21,7 +22,10 @@ export default function CardapioAdmin() {
     async function carregarProdutos() {
         try {
             const response = await fetch(
-                "http://localhost:3001/produtos"
+                `${process.env.NEXT_PUBLIC_API_URL}`,
+                {
+                    method: "DELETE"
+                }
             )
 
             if (!response.ok) {
@@ -67,7 +71,7 @@ export default function CardapioAdmin() {
         try {
 
             const response = await fetch(
-                `http://localhost:3001/produtos/${id}`,
+                `${process.env.NEXT_PUBLIC_API_URL}/produtos${id}`,
                 {
                     method: "DELETE"
                 }
